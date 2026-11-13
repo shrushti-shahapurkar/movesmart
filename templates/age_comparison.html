@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Age-Matched Comparison | MoveSmart</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 25px;
+            font-family: Arial, sans-serif;
+            background: #f2f6fc;
+            color: #23344d;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #18345c, #2877ad);
+            color: white;
+            padding: 30px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 30px;
+        }
+
+        .header p {
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        .profile,
+        .section,
+        .notice {
+            background: white;
+            padding: 25px;
+            margin-bottom: 22px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile h2,
+        .section h2 {
+            margin-top: 0;
+            color: #18345c;
+        }
+
+        .profile p {
+            line-height: 1.8;
+            margin: 4px 0;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 720px;
+        }
+
+        th,
+        td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5eaf1;
+        }
+
+        th {
+            background: #eaf2fc;
+            color: #18345c;
+        }
+
+        .positive {
+            color: #14804a;
+            font-weight: bold;
+        }
+
+        .negative {
+            color: #bd5b27;
+            font-weight: bold;
+        }
+
+        .neutral {
+            color: #52647a;
+            font-weight: bold;
+        }
+
+        .notice {
+            border-left: 5px solid #e4a33b;
+            line-height: 1.7;
+        }
+
+        .notice h3 {
+            margin-top: 0;
+            color: #8a5b0a;
+        }
+
+        .empty {
+            padding: 20px;
+            border-radius: 10px;
+            background: #f5f8fc;
+            line-height: 1.7;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 20px;
+            margin: 5px 8px 5px 0;
+            border-radius: 8px;
+            background: #246eaa;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #174f80;
+        }
+
+        .footer {
+            text-align: center;
+            color: #68778b;
+            font-size: 13px;
+            margin-top: 30px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+
+            .header,
+            .profile,
+            .section,
+            .notice {
+                padding: 18px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .button {
+                display: none;
+            }
+
+            .profile,
+            .section,
+            .notice {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>📊 Age-Matched Gameplay Comparison</h1>
+
+        <p>
+            MoveSmart compares recorded gameplay scores with available
+            records for the same age group and game.
+        </p>
+    </div>
+
+    <div class="profile">
+        <h2>Child Profile</h2>
+
+        <p>
+            <strong>Name:</strong>
+            {{ child_name }}
+        </p>
+
+        <p>
+            <strong>Age:</strong>
+            {{ child_age }} years
+        </p>
+
+        <p>
+            <strong>Comparison method:</strong>
+            Same age and same game
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Gameplay Score Comparison</h2>
+
+        <p>
+            Each child's average score is compared with the average
+            of the available dataset records for the same age and game.
+        </p>
+
+        {% if dataset_message %}
+            <div class="empty">
+                {{ dataset_message }}
+            </div>
+        {% endif %}
+
+        {% if comparisons %}
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Game</th>
+                        <th>Child's Average</th>
+                        <th>Dataset Average</th>
+                        <th>Difference</th>
+                        <th>Child Sessions</th>
+                        <th>Reference Records</th>
+                        <th>Comparison</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in comparisons %}
+                    <tr>
+                        <td>{{ item.game_name }}</td>
+
+                        <td>
+                            {{ "%.2f"|format(item.child_average) }}
+                            / 100
+                        </td>
+
+                        <td>
+                            {% if item.reference_average is not none %}
+                                {{ "%.2f"|format(item.reference_average) }}
+                                / 100
+                            {% else %}
+                                Not available
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if item.difference is not none %}
+                                {{ "%+.2f"|format(item.difference) }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+
+                        <td>{{ item.sessions }}</td>
+
+                        <td>{{ item.reference_count }}</td>
+
+                        <td>
+                            {% if item.comparison_label == "Above dataset average" %}
+                                <span class="positive">
+                                    {{ item.comparison_label }}
+                                </span>
+
+                            {% elif item.comparison_label == "Below dataset average" %}
+                                <span class="negative">
+                                    {{ item.comparison_label }}
+                                </span>
+
+                            {% elif item.comparison_label == "Equal to dataset average" %}
+                                <span class="neutral">
+                                    {{ item.comparison_label }}
+                                </span>
+
+                            {% else %}
+                                <span class="neutral">
+                                    {{ item.comparison_label }}
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+
+        <div class="empty">
+            <strong>No gameplay results are available yet.</strong>
+            <br>
+            Complete a game and save its result before viewing
+            the comparison.
+        </div>
+
+        {% endif %}
+    </div>
+
+    <div class="notice">
+        <h3>🩺 Further Assessment Information</h3>
+
+        <p>
+            This page describes differences between recorded gameplay
+            scores. The comparison dataset has not been established
+            as a reference sample of typically developing children.
+        </p>
+
+        <p>
+            A score below the dataset average does not establish that
+            a child has a medical condition or needs medical treatment.
+            Game performance may be affected by practice, instructions,
+            device differences, and the way each game calculates scores.
+        </p>
+
+        <p>
+            If parents or teachers have persistent concerns about a
+            child's everyday development, learning, attention, or
+            coordination, they may discuss those concerns with a
+            pediatrician or qualified child-development professional.
+            Do not delay seeking advice just because game scores appear
+            average or high.
+        </p>
+    </div>
+
+    <div>
+        <a class="button" href="{{ url_for('dashboard') }}">
+            ← Back to Dashboard
+        </a>
+
+        <button class="button" onclick="window.print()">
+            🖨️ Print Comparison
+        </button>
+    </div>
+
+    <div class="footer">
+        MoveSmart — Game-Based Gameplay Analysis Prototype<br>
+        This report is not a medical diagnosis or validated screening result.
+    </div>
+
+</div>
+
+</body>
+</html>

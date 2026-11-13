@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | MoveSmart</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🎮 MoveSmart
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('result') }}">
+            Results
+        </a>
+
+        <a href="{{ url_for('age_comparison') }}">
+    📊 Age-Matched Gameplay Comparison
+</a>
+
+        <a href="{{ url_for('logout') }}"
+           class="nav-button">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="dashboard-container">
+
+    <div class="welcome-section">
+
+        <div>
+
+            <p class="small-title">
+                CHILD DASHBOARD
+            </p>
+
+            <h1>
+                Hello, {{ session["user_name"] }} 👋
+            </h1>
+
+            <p>
+                Choose a game and start your MoveSmart activity.
+            </p>
+
+        </div>
+
+        <div class="age-badge">
+            Age: {{ session["user_age"] }}
+        </div>
+
+    </div>
+
+
+    <div class="game-grid">
+
+
+        <!-- TARGET TAP -->
+
+        <div class="dashboard-game-card">
+            
+            
+
+            <div class="big-game-icon">
+                🎯
+            </div>
+
+            <h2>Target Tap</h2>
+
+            <p>
+                Click targets as quickly and accurately as possible.
+            </p>
+
+            <div class="game-info">
+                ⚡ Reaction Time &nbsp; 🎯 Accuracy
+            </div>
+
+            <a href="{{ url_for('target_tap') }}"
+               class="primary-button">
+                Play Game
+            </a>
+
+        </div>
+
+
+        <!-- CATCH OBJECT -->
+
+        <div class="dashboard-game-card">
+
+            <div class="big-game-icon">
+                🎈
+            </div>
+
+            <h2>Catch Object</h2>
+
+            <p>
+                Move the basket and catch falling objects.
+            </p>
+
+            <div class="game-info">
+                🖐️ Coordination &nbsp; 👀 Tracking
+            </div>
+
+            <a href="{{ url_for('catch_object') }}"
+               class="primary-button">
+                Play Game
+            </a>
+
+        </div>
+
+
+        <!-- SEQUENCE -->
+
+        <div class="dashboard-game-card">
+
+            <div class="big-game-icon">
+                🔢
+            </div>
+
+            <h2>Sequence Game</h2>
+
+            <p>
+                Select numbers in the correct sequence.
+            </p>
+
+            <div class="game-info">
+                🧠 Sequencing &nbsp; ⚡ Response
+            </div>
+
+            <a href="{{ url_for('sequence_game') }}"
+               class="primary-button">
+                Play Game
+            </a>
+
+        </div>
+        
+        <!-- MAZE EXPLORER -->
+
+        <div class="dashboard-game-card">
+
+            <div class="big-game-icon">🧩</div>
+
+            <h2>Maze Explorer</h2>
+
+            <p>
+                Navigate through a maze and find the finish.
+            </p>
+
+            <div class="game-info">
+                🧭 Navigation &nbsp; 🧠 Problem Solving
+            </div>
+
+            <a href="{{ url_for('maze_explorer') }}"
+               class="primary-button">
+                Play Game
+            </a>
+
+        </div>
+
+
+        <!-- SHAPE MATCHER -->
+
+        <div class="dashboard-game-card">
+
+            <div class="big-game-icon">🔷</div>
+
+            <h2>Shape Matcher</h2>
+
+            <p>
+                Identify and match shapes correctly.
+            </p>
+
+            <div class="game-info">
+                👀 Visual Recognition &nbsp; 🎯 Accuracy
+            </div>
+
+            <a href="{{ url_for('shape_matcher') }}"
+               class="primary-button">
+                Play Game
+            </a>
+
+        </div>
+
+        <!-- BALLOON POP -->
+
+        <div class="dashboard-game-card">
+
+            <div class="big-game-icon">🎈</div>
+
+            <h2>Balloon Pop</h2>
+
+            <p>
+                Pop balloons by clicking them within the time limit.
+            </p>
+
+            <div class="game-info">
+                ⚡ Response Speed &nbsp; 🎯 Target Tapping
+            </div>
+
+            <a href="{{ url_for('balloon_pop') }}"
+               class="primary-button">
+                Play Game
+            </a>
+
+        </div>
+
+
+        <!-- PATH TRACER -->
+
+        <div class="dashboard-game-card">
+
+            <div class="big-game-icon">✏️</div>
+
+            <h2>Path Tracer</h2>
+
+            <p>
+                Trace a path from the starting point to the finish.
+            </p>
+
+            <div class="game-info">
+                ✋ Hand Movement &nbsp; 🎯 Path Following
+            </div>
+
+            <a href="{{ url_for('path_tracer') }}"
+               class="primary-button">
+                Play Game
+            </a>
+
+        </div>
+
+        
+
+
+    </div>
+    
+        <!-- ML ANALYSIS -->
+
+        <div class="dashboard-game-card">
+
+            <div class="big-game-icon">
+                🤖
+            </div>
+
+            <h2>ML Analysis</h2>
+
+            <p>
+                Explore gameplay data using machine learning.
+            </p>
+
+            <div class="game-info">
+                🧠 Machine Learning &nbsp; 📊 Data Analysis
+            </div>
+
+            <a href="{{ url_for('ml_analysis') }}"
+               class="primary-button">
+                Open ML Analysis
+            </a>
+
+        </div>
+        
+<!-- COMPLETE REPORT -->
+
+<div class="report-section">
+
+    <div class="report-icon">📊</div>
+
+    <div class="report-content">
+        <h2>Complete MoveSmart Report</h2>
+
+        <p>
+            View the child's saved game results, performance
+            statistics, reaction times, accuracy, errors, and
+            overall gameplay summary in one report.
+        </p>
+
+        <a href="{{ url_for('full_report') }}"
+           class="primary-button">
+            View Complete Report
+        </a>
+    </div>
+
+</div>
+
+
+
+
+    <div class="previous-results">
+
+        <div class="section-heading">
+
+            <div>
+
+                <h2>Recent Game Results</h2>
+
+                <p>
+                    Your recently completed activities.
+                </p>
+
+            </div>
+
+            <a href="{{ url_for('result') }}"
+               class="secondary-button">
+                View Overall Result
+            </a>
+
+        </div>
+
+
+        {% if results %}
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Game</th>
+                        <th>Score</th>
+                        <th>Accuracy</th>
+                        <th>Time</th>
+                        <th>Errors</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for result in results[:10] %}
+
+                    <tr>
+
+                        <td>
+                            {{ result["game_name"] }}
+                        </td>
+
+                        <td>
+                            {{ result["score"] }}%
+                        </td>
+
+                        <td>
+                            {{ result["accuracy"] }}%
+                        </td>
+
+                        <td>
+                            {{ result["completion_time"] }} sec
+                        </td>
+
+                        <td>
+                            {{ result["errors"] }}
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <div>🎮</div>
+
+            <h3>No games completed yet</h3>
+
+            <p>
+                Choose a game above to start collecting performance data.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

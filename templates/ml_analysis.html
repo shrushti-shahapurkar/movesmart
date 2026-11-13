@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoveSmart ML Analysis</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 28px 5%;
+            font-family: Arial, sans-serif;
+            color: #172b4d;
+            background: #f1f5ff;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 6px;
+            font-size: 36px;
+        }
+
+        .subtitle {
+            margin-top: 0;
+            margin-bottom: 26px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .card {
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 8px 24px rgba(30, 50, 90, 0.08);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin: 14px 0 8px;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            border: 1px solid #999;
+            border-radius: 10px;
+        }
+
+        button {
+            cursor: pointer;
+            color: white;
+            background: #315bd6;
+            border: none;
+        }
+
+        button:hover {
+            background: #2447ad;
+        }
+
+        .prediction {
+            margin: 18px 0;
+            color: #315bd6;
+            font-size: 42px;
+            font-weight: bold;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .metric {
+            padding: 18px;
+            background: #f1f5ff;
+            border-radius: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        .metric strong {
+            display: block;
+            margin-top: 8px;
+            font-size: 26px;
+        }
+
+        .notice {
+            margin-top: 16px;
+            padding: 16px;
+            line-height: 1.6;
+            background: #fff3d5;
+            border-radius: 10px;
+        }
+
+        .message {
+            padding: 14px;
+            line-height: 1.6;
+            background: #fff3d5;
+            border-radius: 10px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #315bd6;
+        }
+
+        .empty-state {
+            padding: 18px;
+            background: #f1f5ff;
+            border-radius: 12px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 14px;
+            }
+
+            .card {
+                padding: 22px 18px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .prediction {
+                font-size: 34px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <a class="back-link" href="{{ url_for('dashboard') }}">
+        ← Back to Dashboard
+    </a>
+
+    <h1>🤖 MoveSmart ML Analysis</h1>
+
+    <p class="subtitle">
+        Explore gameplay score patterns using a Random Forest model.
+    </p>
+
+    <!-- GAME SCORE PREDICTION -->
+    <section class="card">
+
+        <h2>Predict a Game Score</h2>
+
+        <p>
+            Child age:
+            <strong>{{ session.get('user_age', 8) }}</strong>
+        </p>
+
+        <p>
+            Valid gameplay records:
+            <strong>{{ sample_count }}</strong>
+        </p>
+
+        {% if games %}
+
+        <form method="GET" action="{{ url_for('ml_analysis') }}">
+
+            <label for="game_name">Select a game:</label>
+
+            <select id="game_name" name="game_name" required>
+
+                {% for game in games %}
+
+                <option value="{{ game }}"
+                    {% if game == selected_game %}selected{% endif %}>
+                    {{ game.replace('_', ' ').title() }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+            <button type="submit">Train and Predict</button>
+
+        </form>
+
+        {% else %}
+
+        <div class="empty-state">
+            No game names are available because no valid dataset records
+            were loaded. Check the CSV file and Flask terminal output.
+        </div>
+
+        {% endif %}
+
+        {% if prediction is not none %}
+
+        <div class="prediction">
+            {{ prediction }} / 100
+        </div>
+
+        <p>
+            Model-estimated score for
+            <strong>{{ selected_game }}</strong>.
+        </p>
+
+        {% endif %}
+
+        {% if message %}
+        <p class="message">{{ message }}</p>
+        {% endif %}
+
+    </section>
+
+    <!-- MODEL EVALUATION -->
+    <section class="card">
+
+        <h2>Model Evaluation</h2>
+
+        {% if mae is not none %}
+
+        <div class="metrics">
+
+            <div class="metric">
+                Mean Absolute Error (MAE)
+                <strong>{{ mae }}</strong>
+                <p>Average absolute error in score points.</p>
+            </div>
+
+            {% if r2 is not none %}
+
+            <div class="metric">
+                R² Score
+                <strong>{{ r2 }}</strong>
+                <p>
+                    Measures fit on held-out records. A negative value
+                    means the model performed worse than a simple
+                    mean-score baseline on that test set.
+                </p>
+            </div>
+
+            {% endif %}
+
+            <div class="metric">
+                Test records
+                <strong>{{ evaluation_count }}</strong>
+                <p>
+                    Records excluded from model training during evaluation.
+                </p>
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+            Evaluation metrics are not available yet.
+            More valid gameplay records may be needed.
+        </div>
+
+        {% endif %}
+
+        {% if evaluation_message %}
+        <p class="notice">{{ evaluation_message }}</p>
+        {% endif %}
+
+    </section>
+
+    <!-- MODEL EXPLANATION -->
+    <section class="card">
+
+        <h2>How does the ML model work?</h2>
+
+        <ol>
+            <li>Reads valid gameplay scores from the CSV dataset.</li>
+            <li>Converts age and game name into numeric features.</li>
+            <li>Trains a Random Forest regression model.</li>
+            <li>
+                Evaluates performance on held-out records when enough
+                data is available.
+            </li>
+            <li>Estimates a score for the selected game and age.</li>
+        </ol>
+
+        <p class="notice">
+            <strong>Important:</strong>
+            This is an educational gameplay-score prediction demonstration,
+            not a validated screening tool. Predictions may be inaccurate
+            when data is limited or unrepresentative. They must not be used
+            to diagnose or classify a child or predict a health condition.
+        </p>
+
+    </section>
+
+</div>
+</body>
+</html>

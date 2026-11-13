@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Sequence Game | MoveSmart</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="game-page">
+
+<div class="game-topbar">
+
+    <div class="logo">
+        🎮 MoveSmart
+    </div>
+
+    <a href="{{ url_for('dashboard') }}">
+        ← Dashboard
+    </a>
+
+</div>
+
+
+<div class="game-container">
+
+    <div class="game-intro">
+
+        <span class="game-icon">🔢</span>
+
+        <h1>Sequence Game</h1>
+
+        <p>
+            Click the numbers in the correct order.
+        </p>
+
+    </div>
+
+
+    <div class="game-stats-bar">
+
+        <div>
+            <span>Progress</span>
+            <strong id="sequenceProgress">
+                0 / 8
+            </strong>
+        </div>
+
+        <div>
+            <span>Errors</span>
+            <strong id="sequenceErrors">
+                0
+            </strong>
+        </div>
+
+        <div>
+            <span>Time</span>
+            <strong id="sequenceTimer">
+                0s
+            </strong>
+        </div>
+
+    </div>
+
+
+    <div id="sequenceArea"
+         class="sequence-area">
+
+        <div id="sequenceStart">
+
+            <h2>Ready? 🔢</h2>
+
+            <p>
+                Click START and select numbers from 1 to 8.
+            </p>
+
+            <button id="sequenceStartButton"
+                    class="primary-button">
+
+                START GAME 🚀
+
+            </button>
+
+        </div>
+
+
+        <div id="numberContainer"
+             class="number-container">
+        </div>
+
+    </div>
+
+
+    <div id="sequenceMessage"
+         class="game-message">
+    </div>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='js/sequence_game.js') }}"></script>
+
+</body>
+</html>

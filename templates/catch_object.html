@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Catch Object | MoveSmart</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="game-page">
+
+<div class="game-topbar">
+
+    <div class="logo">
+        🎮 MoveSmart
+    </div>
+
+    <a href="{{ url_for('dashboard') }}">
+        ← Dashboard
+    </a>
+
+</div>
+
+
+<div class="game-container">
+
+    <div class="game-intro">
+
+        <span class="game-icon">🎈</span>
+
+        <h1>Catch the Object</h1>
+
+        <p>
+            Move the basket and catch the falling objects.
+        </p>
+
+    </div>
+
+
+    <div class="game-stats-bar">
+
+        <div>
+            <span>Caught</span>
+            <strong id="caught">0</strong>
+        </div>
+
+        <div>
+            <span>Missed</span>
+            <strong id="missed">0</strong>
+        </div>
+
+        <div>
+            <span>Time</span>
+            <strong id="catchTimer">30s</strong>
+        </div>
+
+    </div>
+
+
+    <div id="catchGameArea"
+         class="catch-game-area">
+
+        <div id="catchStart">
+
+            <h2>Ready to Catch? 🎈</h2>
+
+            <p>
+                Use your mouse or touch to move the basket.
+            </p>
+
+            <button id="catchStartButton"
+                    class="primary-button">
+                START GAME 🚀
+            </button>
+
+        </div>
+
+
+        <div id="basket"
+             class="basket">
+            🧺
+        </div>
+
+    </div>
+
+
+    <div id="catchMessage"
+         class="game-message">
+    </div>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='js/catch_object.js') }}"></script>
+
+</body>
+</html>

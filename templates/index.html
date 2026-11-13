@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MoveSmart | AI Game Screening</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🎮 MoveSmart
+    </div>
+
+    <div class="nav-links">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}" class="nav-button">
+            Get Started
+        </a>
+    </div>
+
+</nav>
+
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            🎮 Learn • Play • Discover
+        </div>
+
+        <h1>
+            Play Games.<br>
+            <span>Understand Performance.</span>
+        </h1>
+
+        <p>
+            MoveSmart is a child-friendly gamified system that
+            collects game performance data such as reaction time,
+            accuracy and coordination-related measures.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="{{ url_for('register') }}"
+               class="primary-button">
+                Start Playing 🚀
+            </a>
+
+            <a href="#about"
+               class="secondary-button">
+                Learn More
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-game">
+
+        <div class="game-card">
+
+            <div class="game-card-header">
+                <span>🎯</span>
+                <span>MoveSmart</span>
+            </div>
+
+            <div class="target-demo">
+                🎯
+            </div>
+
+            <div class="game-stats">
+
+                <div>
+                    <strong>92%</strong>
+                    <small>Accuracy</small>
+                </div>
+
+                <div>
+                    <strong>0.72s</strong>
+                    <small>Reaction</small>
+                </div>
+
+                <div>
+                    <strong>85%</strong>
+                    <small>Score</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section id="about" class="features-section">
+
+    <h2>What does MoveSmart measure?</h2>
+
+    <p class="section-subtitle">
+        Interactive games collect measurable performance features.
+    </p>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Reaction Time</h3>
+            <p>
+                Measures how quickly a child responds to visual targets.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Accuracy</h3>
+            <p>
+                Measures correct and incorrect responses during games.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🖐️</div>
+            <h3>Coordination</h3>
+            <p>
+                Interactive tasks provide movement and control-related data.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Performance</h3>
+            <p>
+                Game results can be viewed and tracked over time.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <p>
+        © 2026 MoveSmart | CSE Mini Project
+    </p>
+
+    <p class="disclaimer">
+        Screening-support prototype only. Not a medical diagnostic tool.
+    </p>
+
+</footer>
+
+</body>
+</html>

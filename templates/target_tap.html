@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Target Tap | MoveSmart</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="game-page">
+
+<div class="game-topbar">
+
+    <div class="logo">
+        🎮 MoveSmart
+    </div>
+
+    <a href="{{ url_for('dashboard') }}">
+        ← Dashboard
+    </a>
+
+</div>
+
+
+<div class="game-container">
+
+    <div class="game-intro">
+
+        <span class="game-icon">🎯</span>
+
+        <h1>Target Tap</h1>
+
+        <p>
+            Click the target as quickly as you can.
+        </p>
+
+    </div>
+
+
+    <div class="game-stats-bar">
+
+        <div>
+            <span>Targets</span>
+            <strong id="targetCount">0 / 15</strong>
+        </div>
+
+        <div>
+            <span>Score</span>
+            <strong id="score">0</strong>
+        </div>
+
+        <div>
+            <span>Time</span>
+            <strong id="timer">0.0s</strong>
+        </div>
+
+    </div>
+
+
+    <div id="targetGameArea"
+         class="target-game-area">
+
+        <div id="startMessage">
+
+            <h2>Ready?</h2>
+
+            <p>
+                Click START and then tap the targets.
+            </p>
+
+            <button id="startButton"
+                    class="primary-button">
+                START GAME 🚀
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div id="gameMessage"
+         class="game-message">
+    </div>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='js/target_tap.js') }}"></script>
+
+</body>
+</html>

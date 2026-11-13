@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Register | MoveSmart</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="auth-page">
+
+<div class="auth-container">
+
+    <div class="auth-logo">
+        🎮 MoveSmart
+    </div>
+
+    <div class="auth-card">
+
+        <h1>Create Profile</h1>
+
+        <p class="auth-subtitle">
+            Create a child profile to start playing.
+        </p>
+
+        {% with messages = get_flashed_messages() %}
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="flash-message">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <form method="POST">
+
+            <label>Child Name</label>
+
+            <input type="text"
+                   name="name"
+                   placeholder="Enter name"
+                   required>
+
+
+            <label>Age</label>
+
+            <input type="number"
+                   name="age"
+                   min="5"
+                   max="10"
+                   placeholder="Age 5–10"
+                   required>
+
+
+            <label>Username</label>
+
+            <input type="text"
+                   name="username"
+                   placeholder="Create username"
+                   required>
+
+
+            <label>Password</label>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Create password"
+                   required>
+
+
+            <button type="submit"
+                    class="primary-button full-button">
+
+                Create Profile 🚀
+
+            </button>
+
+        </form>
+
+
+        <p class="auth-bottom">
+
+            Already have an account?
+
+            <a href="{{ url_for('login') }}">
+                Login
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

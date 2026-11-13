@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results | MoveSmart</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">🎮 MoveSmart</div>
+
+    <div class="nav-links">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('logout') }}" class="nav-button">Logout</a>
+    </div>
+</nav>
+
+<div class="result-container">
+
+    <div class="result-header">
+        <p class="small-title">PERFORMANCE SUMMARY</p>
+
+        <h1>{{ session["user_name"] }}'s Results 📊</h1>
+
+        <p>Here is a summary of your recent MoveSmart activities.</p>
+    </div>
+
+    <div class="overall-result">
+        <div class="score-circle">
+            <strong>{{ overall_score }}%</strong>
+            <span>Overall</span>
+        </div>
+
+        <div class="performance-text">
+            <h2>{{ performance }}</h2>
+
+            <p>
+                This result represents game-performance
+                measurements from the completed activities.
+            </p>
+
+            <p class="disclaimer">
+                This is not a medical diagnosis. If there are
+                concerns about a child's development, consult
+                a qualified professional.
+            </p>
+        </div>
+    </div>
+
+    {% if results %}
+
+    <h2 class="result-section-title">Game Performance</h2>
+
+    <div class="result-grid">
+
+        {% for result in results %}
+
+        <div class="result-card">
+
+            <div class="result-card-icon">
+                {% if result["game_name"] == "Target Tap" %}
+                    🎯
+                {% elif result["game_name"] == "Catch Object" %}
+                    🎈
+                {% elif result["game_name"] == "Sequence Game" %}
+                    🔢
+                {% elif result["game_name"] == "Maze Explorer" %}
+                    🧩
+                {% elif result["game_name"] == "Shape Matcher" %}
+                    🔷
+                {% elif result["game_name"] == "Balloon Pop" %}
+                    🎈
+                {% elif result["game_name"] == "Path Tracer" %}
+                    ✏️
+                {% else %}
+                    🎮
+                {% endif %}
+            </div>
+
+            <h3>{{ result["game_name"] }}</h3>
+
+            <div class="result-score">
+                {{ result["score"] }}%
+            </div>
+
+            <p>
+                Accuracy:
+                <strong>{{ result["accuracy"] }}%</strong>
+            </p>
+
+            <p>
+                Time:
+                <strong>{{ result["completion_time"] }} sec</strong>
+            </p>
+
+            <p>
+                Errors:
+                <strong>{{ result["errors"] }}</strong>
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- Buttons appear only once, outside the loop -->
+    <div class="report-actions">
+
+        <a href="{{ url_for('full_report') }}"
+           class="primary-button">
+            📄 View Complete Report
+        </a>
+
+        <a href="{{ url_for('ml_analysis') }}"
+           class="primary-button">
+            🤖 View AI Analysis
+        </a>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-state">
+        <div>📊</div>
+        <h2>No Results Yet</h2>
+
+        <p>
+            Complete the games to generate your performance summary.
+        </p>
+
+        <a href="{{ url_for('dashboard') }}" class="primary-button">
+            Start a Game
+        </a>
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

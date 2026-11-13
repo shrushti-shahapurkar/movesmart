@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login | MoveSmart</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="auth-page">
+
+<div class="auth-container">
+
+    <div class="auth-logo">
+        🎮 MoveSmart
+    </div>
+
+    <div class="auth-card">
+
+        <h1>Welcome Back!</h1>
+
+        <p class="auth-subtitle">
+            Login to continue your MoveSmart journey.
+        </p>
+
+
+        {% with messages = get_flashed_messages() %}
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="flash-message">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <form method="POST">
+
+            <label>Username</label>
+
+            <input type="text"
+                   name="username"
+                   placeholder="Enter username"
+                   required>
+
+
+            <label>Password</label>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Enter password"
+                   required>
+
+
+            <button type="submit"
+                    class="primary-button full-button">
+
+                Login 🎮
+
+            </button>
+
+        </form>
+
+
+        <p class="auth-bottom">
+
+            New to MoveSmart?
+
+            <a href="{{ url_for('register') }}">
+                Create Profile
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
